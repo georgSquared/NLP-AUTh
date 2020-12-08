@@ -67,13 +67,21 @@ $ pip install -r requirements.txt
 ├── src                : python code for experiments
 └── working            : Kaggle Notebooks 
 ```
-
+### Kaggle
 How to download the competition's dataset using Kaggle API
+1. Register an account with Kaggle
+2. Generate a new API key at https://www.kaggle.com/$username/account
+3. (Linux) Move the downloaded kaggle.json to /home/$USER/.kaggle
+4. (Linux) 
+```
+chmod 600 /home/$USER/.kaggle/kaggle.json
+```
+5. Accept the competition rules at https://www.kaggle.com/c/quora-insincere-questions-classification/rules
+6.
 ```
 $ cd input/
 $ kaggle competitions download -c quora-insincere-questions-classification
 ```
-
 
 Data directory: `input`
 
