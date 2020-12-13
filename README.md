@@ -52,6 +52,13 @@ $ python3.7 -m venv venv_name
 $ source venv_name/bin/activate
 $ pip install -r requirements.txt
 ```
+Note: If you use conda, some requirements (i.e wordcloud, textblob) are available via channel conda-forge. 
+
+To add
+```
+conda config --add channels conda-forge
+```
+
 
 ---
 
