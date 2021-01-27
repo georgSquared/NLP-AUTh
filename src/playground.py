@@ -1,7 +1,37 @@
 """
 Playground to test stuff, and leave irrelevant code
 """
+import pandas as pd
 
+test_df = pd.read_csv('../input/test.csv')
+
+from nltk import word_tokenize
+test_df['processed'] = test_df['question_text'].apply(lambda row: word_tokenize(row))
+test_df['processed'] = test_df['processed'].apply(lambda row: [token for token in row if token.isalpha()])
+
+from nltk.corpus import stopwords
+eng_stopwords = stopwords.words('english')
+test_df['processed'] = test_df['processed'].apply(lambda row: [token for token in row if token not in eng_stopwords])
+
+from nltk.stem import PorterStemmer
+
+stemmer = PorterStemmer()
+test_df['stemmed'] = test_df['processed'].apply(lambda row: [stemmer.stem(token) for token in row])
+
+from wordcloud import WordCloud, STOPWORDS
+
+test_df['wordcloud'] = test_df['processed'].apply(lambda row: [token for token in row if token not in STOPWORDS])
+test_df['wordcloud'] = test_df['processed'].apply(lambda row: ' '.join(map(str, row)))
+
+from textblob import TextBlob
+
+test_df["polarity"] = test_df['wordcloud'].apply(lambda x: TextBlob(x).sentiment.polarity)
+test_df["subjectivity"] = test_df['wordcloud'].apply(lambda x: TextBlob(x).sentiment.subjectivity)
+
+import textstat
+
+test_df['readability'] = test_df['question_text'].apply(lambda x: textstat.text_standard(x, float_output=True))
+test_df.to_csv("test_exotic_features.csv")
 
 # #%% md
 #

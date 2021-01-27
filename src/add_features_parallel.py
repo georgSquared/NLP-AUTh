@@ -34,3 +34,12 @@ def parallelize_dataframe(df, func, n_cores=4):
 
 # What does it do? It breaks the dataframe into n_cores parts, and spawns n_cores processes which apply the function to all the pieces.
 # Once it applies the function to all the split dataframes, it just concatenates the split dataframe and returns the full dataframe to us.
+
+if __name__ == "__main__":
+    train_df = pd.read_csv('../input/train.csv')
+    features_df = add_features(train_df)
+    features_df.to_csv("train_classic_features.csv")
+
+    test_df = pd.read_csv('../input/test.csv')
+    features_df = add_features(test_df)
+    features_df.to_csv("test_classic_features.csv")
