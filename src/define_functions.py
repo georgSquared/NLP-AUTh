@@ -22,7 +22,6 @@ import spacy
 
 import sys
 from os.path import dirname
-#sys.path.append(dirname(dirname(__file__)))
 import gc
 
 
@@ -94,10 +93,6 @@ def edits2(word):
 def singlify(word):
     return "".join([letter for i,letter in enumerate(word) if i == 0 or letter != word[i-1]])
 
-# modified version of 
-# https://www.kaggle.com/sudalairajkumar/a-look-at-different-embeddings
-# https://www.kaggle.com/danofer/different-embeddings-with-attention-fork
-# https://www.kaggle.com/shujian/different-embeddings-with-attention-fork-fork
 
 def load_glove(word_dict, lemma_dict):
     EMBEDDING_FILE = '../input/embeddings/glove.840B.300d/glove.840B.300d.txt'

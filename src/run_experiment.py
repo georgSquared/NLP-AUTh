@@ -10,7 +10,7 @@ import time
 import numpy as np
 import pandas as pd
 import spacy
-import tqdm
+from tqdm import tqdm
 import gc
 
 from keras.preprocessing.sequence import pad_sequences
@@ -26,8 +26,13 @@ start_time = time.time()
 
 # 1. Load data
 print("Loading data ...")
-train = pd.read_csv('../input/train.csv').fillna(' ')
-test = pd.read_csv('../input/test.csv').fillna(' ')
+
+# train = pd.read_csv('../input/train.csv').fillna(' ')
+# test = pd.read_csv('../input/test.csv').fillna(' ')
+
+train = pd.read_csv('input/quora-insincere-questions-classification/train_sample.csv').fillna(' ')
+test = pd.read_csv('input/quora-insincere-questions-classification/test.csv').fillna(' ')
+
 train_text = train['question_text']
 test_text = test['question_text']
 text_list = pd.concat([train_text, test_text])
@@ -39,12 +44,16 @@ print("--- %s seconds ---" % (time.time() - start_time))
 start_time = time.time()
 print("Spacy NLP ...")
 nlp = spacy.load('en_core_web_lg', disable=['parser','ner','tagger'])
+
+nlp = spacy.load('en_core_web_sm', disable=['parser','ner','tagger'])
+
 nlp.vocab.add_flag(lambda s: s.lower() in spacy.lang.en.stop_words.STOP_WORDS, spacy.attrs.IS_STOP)
 word_dict = {}
 word_index = 1
 lemma_dict = {}
 docs = nlp.pipe(text_list, n_threads = 2)
 word_sequences = []
+
 for doc in tqdm(docs):
     word_seq = []
     for token in doc:
